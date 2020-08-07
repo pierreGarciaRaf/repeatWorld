@@ -1,0 +1,102 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://boom.ogg" type="AudioStream" id=1]
+[ext_resource path="res://splosion/splosionSpriteSheet.png" type="Texture" id=2]
+[ext_resource path="res://explosion.gd" type="Script" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type particles;
+uniform int trail_divisor = 1;
+uniform float duration = 5.0;
+varying float time0;
+
+uint hash(uint x) {
+	x = ((x >> uint(16)) ^ x) * uint(73244475);
+	x = ((x >> uint(16)) ^ x) * uint(73244475);
+	x = (x >> uint(16)) ^ x;
+	return x;
+}
+
+float rand_from_seed(uint seed) {
+	int k;
+	int s = int(seed);
+	if (s == 0) {
+		s = 305420679;
+	}
+	k = s / 127773;
+	s = 16807 * (s - k * 127773) - 2836 * k;
+	if (s < 0) {
+		s += 2147483647;
+	}
+	seed = uint(s);
+	return float(seed % uint(65536)) / 65535.0;
+}
+
+
+void vertex(){
+	
+	uint base_number = NUMBER/uint(trail_divisor);
+	uint seed1 = hash(base_number+uint(INDEX));
+	uint seed2 = hash(base_number+uint(INDEX+1));
+	uint seed3 = hash(base_number+uint(INDEX+2));
+	
+	vec3 particlePos = vec3(TRANSFORM[3][0],TRANSFORM[3][1],TRANSFORM[3][2]);
+	if (RESTART){
+		time0 = TIME;
+		VELOCITY.x = rand_from_seed(seed1)*100.0-50.0;
+		VELOCITY.y = rand_from_seed(seed2)*100.0-50.0;
+		VELOCITY.z = rand_from_seed(seed3)*100.0-50.0;
+		CUSTOM.z = 0.0;
+		CUSTOM.x = rand_from_seed(seed3)*2.0-1.0;
+	}
+	COLOR.a -=DELTA/(duration-0.5);
+	VELOCITY.y -= DELTA * 9.8;
+	CUSTOM.z += DELTA/(duration/8.0);
+	CUSTOM.x += DELTA/(duration/30.0);
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/trail_divisor = 1
+shader_param/duration = 5.0
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 2
+particles_anim_v_frames = 6
+particles_anim_loop = false
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=4]
+material = SubResource( 3 )
+size = Vector2( 10, 10 )
+
+[node name="explosion" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="explosion" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_db = 0.5
+unit_size = 10.5
+pitch_scale = 0.8
+autoplay = true
+
+[node name="selfDestruction" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+emitting = false
+amount = 50
+lifetime = 3.5
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB( -83, -335, -62, 166, 670, 124 )
+process_material = SubResource( 2 )
+draw_pass_1 = SubResource( 4 )
+[connection signal="timeout" from="selfDestruction" to="." method="_on_selfDestruction_timeout"]

@@ -1,0 +1,174 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://worldGlobalVariables.gd" type="Script" id=2]
+[ext_resource path="res://toRepeatStaticaly.tscn" type="PackedScene" id=3]
+[ext_resource path="res://toRepeatDynamically.tscn" type="PackedScene" id=4]
+[ext_resource path="res://InvisibleWall.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Follower.tscn" type="PackedScene" id=6]
+
+[node name="flatWorld" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="sun" type="DirectionalLight" parent="."]
+transform = Transform( 0.0147849, -0.827262, 0.561621, -0.285316, 0.53484, 0.795325, -0.95832, -0.171998, -0.228123, 0, 18.8063, 0 )
+shadow_enabled = true
+directional_shadow_max_distance = 431.5
+
+[node name="toRepeatDynamically" parent="." instance=ExtResource( 4 )]
+
+[node name="base0" type="Spatial" parent="toRepeatDynamically"]
+
+[node name="Player" parent="toRepeatDynamically/base0" groups=[
+"principalPlayer",
+] instance=ExtResource( 1 )]
+transform = Transform( 0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, -133, 120.213, 69 )
+maxSpeed = 2.0
+
+[node name="Follower" parent="toRepeatDynamically/base0" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -234, 77, 2 )
+toFollowPath = NodePath("../Player")
+thrust = 2.0
+directFollow = 3.0
+armDelay = 0.5
+
+[node name="Follower2" parent="toRepeatDynamically/base0" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8, 77, -81.8 )
+toFollowPath = NodePath("../Player")
+thrust = 2.0
+directFollow = 3.0
+armDelay = 0.5
+
+[node name="Follower3" parent="toRepeatDynamically/base0" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -93.5, 77, -73.6 )
+toFollowPath = NodePath("../Player")
+thrust = 2.0
+directFollow = 3.0
+armDelay = 0.5
+
+[node name="toRepeatStaticaly" parent="." instance=ExtResource( 3 )]
+
+[node name="base" type="Spatial" parent="toRepeatStaticaly"]
+
+[node name="environment" type="Spatial" parent="toRepeatStaticaly/base"]
+
+[node name="CSGCombiner" type="CSGCombiner" parent="toRepeatStaticaly/base/environment"]
+use_collision = true
+
+[node name="CSGCylinder" type="CSGCylinder" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( 0.999848, 0, 0.0174524, 0, 1, 0, -0.0174524, 0, 0.999848, 0, 100, 0 )
+radius = 30.0
+height = 200.0
+smooth_faces = false
+
+[node name="CSGCylinder2" type="CSGCylinder" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0, 1, 0, 86, 0 )
+operation = 2
+radius = 15.0
+height = 86.0
+
+[node name="CSGCylinder3" type="CSGCylinder" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( -0.12941, -0.224144, -0.965926, 0.866025, -0.5, 0, -0.482963, -0.836516, 0.258819, 0, 142, 0 )
+operation = 2
+radius = 16.0
+height = 86.0
+
+[node name="CSGCylinder4" type="CSGCylinder" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( -0.814705, 0.320941, -0.482963, 0.320941, -0.444114, -0.836516, -0.482963, -0.836516, 0.258819, 4, 37, 0 )
+operation = 2
+radius = 19.0
+height = 86.0
+
+[node name="CSGBox" type="CSGBox" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 77, 73 )
+width = 12.0
+height = 10.0
+depth = 112.0
+
+[node name="CSGBox2" type="CSGBox" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( -0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 44, 114, -67 )
+width = 12.0
+height = 10.0
+depth = 120.0
+
+[node name="CSGBox4" type="CSGBox" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 81, 120, -89 )
+width = 42.0
+height = 10.0
+depth = 120.0
+
+[node name="CSGBox5" type="CSGBox" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 9, 75, 138 )
+width = 70.0
+height = 20.0
+depth = 72.0
+
+[node name="CSGBox6" type="CSGBox" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -133, 92, -81 )
+width = 16.0
+height = 130.0
+depth = 14.0
+
+[node name="CSGBox3" type="CSGBox" parent="toRepeatStaticaly/base/environment/CSGCombiner"]
+transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -75, 36, -45 )
+width = 12.0
+height = 10.0
+depth = 148.0
+
+[node name="lights" type="Spatial" parent="toRepeatStaticaly/base/environment"]
+
+[node name="OmniLight3" type="OmniLight" parent="toRepeatStaticaly/base/environment/lights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 131, -18 )
+light_color = Color( 0.607843, 0.372549, 0.372549, 1 )
+light_energy = 3.39
+light_indirect_energy = 3.95
+omni_range = 61.0
+
+[node name="OmniLight4" type="OmniLight" parent="toRepeatStaticaly/base/environment/lights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 146, 15 )
+light_color = Color( 0.407843, 0.607843, 0.372549, 1 )
+light_energy = 3.36
+light_indirect_energy = 3.95
+omni_range = 61.0
+
+[node name="OmniLight6" type="OmniLight" parent="toRepeatStaticaly/base/environment/lights"]
+transform = Transform( 0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -19.2319, 72, -0.940886 )
+light_color = Color( 0.607843, 0.372549, 0.372549, 1 )
+light_energy = 6.35
+light_indirect_energy = 3.95
+omni_range = 61.0
+
+[node name="OmniLight5" type="OmniLight" parent="toRepeatStaticaly/base/environment/lights"]
+transform = Transform( 0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 15.2319, 87, -2.05911 )
+light_color = Color( 0.407843, 0.607843, 0.372549, 1 )
+light_energy = 3.36
+light_indirect_energy = 3.95
+omni_range = 61.0
+
+[node name="OmniLight8" type="OmniLight" parent="toRepeatStaticaly/base/environment/lights"]
+transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 6.13173, 14, -16.7028 )
+light_color = Color( 0.607843, 0.372549, 0.372549, 1 )
+light_energy = 4.37
+light_indirect_energy = 3.95
+omni_range = 61.0
+
+[node name="OmniLight7" type="OmniLight" parent="toRepeatStaticaly/base/environment/lights"]
+transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -10.1317, 29, 13.7028 )
+light_color = Color( 0.407843, 0.607843, 0.372549, 1 )
+light_energy = 3.36
+light_indirect_energy = 3.95
+omni_range = 61.0
+
+[node name="borderWalls" type="Spatial" parent="toRepeatStaticaly/base/environment"]
+
+[node name="InvisibleWall" parent="toRepeatStaticaly/base/environment/borderWalls" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -350, 0, 0 )
+
+[node name="InvisibleWall2" parent="toRepeatStaticaly/base/environment/borderWalls" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 0, 0, -350 )
+
+[node name="InvisibleWall4" parent="toRepeatStaticaly/base/environment/borderWalls" instance=ExtResource( 5 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 350, 0, 0 )
+
+[node name="InvisibleWall3" parent="toRepeatStaticaly/base/environment/borderWalls" instance=ExtResource( 5 )]
+transform = Transform( 7.54979e-08, 0, 1, 0, 1, 0, -1, 0, 7.54979e-08, 0, 0, 350 )

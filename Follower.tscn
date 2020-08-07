@@ -1,0 +1,197 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://Follower.gd" type="Script" id=1]
+[ext_resource path="res://thrust.ogg" type="AudioStream" id=2]
+[ext_resource path="res://FollowerUnarmedLight.tres" type="Material" id=5]
+
+[sub_resource type="CapsuleShape" id=1]
+height = 5.0
+
+[sub_resource type="CylinderMesh" id=2]
+top_radius = 0.7
+bottom_radius = 1.1
+height = 1.048
+radial_segments = 14
+
+[sub_resource type="CylinderMesh" id=3]
+top_radius = 0.6
+bottom_radius = 0.3
+height = 6.5
+radial_segments = 14
+
+[sub_resource type="VisualShaderNodeScalarOp" id=4]
+default_input_values = [ 0, 0.0, 1, 0.5 ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorScalarMix" id=5]
+
+[sub_resource type="VisualShaderNodeColorConstant" id=6]
+constant = Color( 0.898438, 1, 0, 1 )
+
+[sub_resource type="VisualShaderNodeColorConstant" id=7]
+constant = Color( 0, 0, 0, 1 )
+
+[sub_resource type="VisualShaderNodeInput" id=8]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeTransformVecMult" id=9]
+
+[sub_resource type="VisualShaderNodeTransformMult" id=10]
+default_input_values = [ 0, Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ), 1, Transform( -1, 0, 0, 0, -1, 0, 0, 0, -1, -1, -1, -1 ) ]
+
+[sub_resource type="VisualShaderNodeInput" id=11]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeInput" id=12]
+input_name = "camera"
+
+[sub_resource type="VisualShaderNodeInput" id=13]
+input_name = "vertex"
+
+[sub_resource type="VisualShaderNodeTransformVecMult" id=14]
+
+[sub_resource type="VisualShaderNodeDotProduct" id=15]
+default_input_values = [ 0, Vector3( 4, 4, 1 ), 1, Vector3( 0, 0, 0 ) ]
+
+[sub_resource type="VisualShaderNodeScalarOp" id=16]
+default_input_values = [ 0, 0.0, 1, 0.5 ]
+operator = 4
+
+[sub_resource type="VisualShaderNodeScalarFunc" id=17]
+function = 15
+
+[sub_resource type="VisualShaderNodeScalarOp" id=18]
+default_input_values = [ 0, 0.0, 1, 2.0 ]
+operator = 2
+
+[sub_resource type="VisualShader" id=19]
+code = "shader_type spatial;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Color:12
+	vec3 n_out12p0 = vec3(0.898438, 1.000000, 0.000000);
+	float n_out12p1 = 1.000000;
+
+// Color:13
+	vec3 n_out13p0 = vec3(0.000000, 0.000000, 0.000000);
+	float n_out13p1 = 1.000000;
+
+// Input:18
+	vec3 n_out18p0 = vec3(UV, 0.0);
+
+// DotProduct:5
+	vec3 n_in5p0 = vec3(4.00000, 4.00000, 1.00000);
+	float n_out5p0 = dot(n_in5p0, n_out18p0);
+
+// ScalarOp:6
+	float n_in6p1 = 0.50000;
+	float n_out6p0 = mod(n_out5p0, n_in6p1);
+
+// ScalarOp:9
+	float n_in9p1 = 2.00000;
+	float n_out9p0 = n_out6p0 * n_in9p1;
+
+// ScalarFunc:8
+	float n_out8p0 = round(n_out9p0);
+
+// ScalarOp:10
+	float n_in10p1 = 0.50000;
+	float n_out10p0 = n_out8p0 * n_in10p1;
+
+// VectorScalarMix:11
+	vec3 n_out11p0 = mix(n_out12p0, n_out13p0, n_out10p0);
+
+// Output:0
+	ALBEDO = n_out11p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( 757, 3 )
+nodes/fragment/0/position = Vector2( 1500, 220 )
+nodes/fragment/2/node = SubResource( 12 )
+nodes/fragment/2/position = Vector2( -549, 294 )
+nodes/fragment/3/node = SubResource( 13 )
+nodes/fragment/3/position = Vector2( -509, 474 )
+nodes/fragment/4/node = SubResource( 14 )
+nodes/fragment/4/position = Vector2( -254, 349 )
+nodes/fragment/5/node = SubResource( 15 )
+nodes/fragment/5/position = Vector2( 166, 214 )
+nodes/fragment/6/node = SubResource( 16 )
+nodes/fragment/6/position = Vector2( 347, 131 )
+nodes/fragment/8/node = SubResource( 17 )
+nodes/fragment/8/position = Vector2( 713, 172.5 )
+nodes/fragment/9/node = SubResource( 18 )
+nodes/fragment/9/position = Vector2( 523, 184 )
+nodes/fragment/10/node = SubResource( 4 )
+nodes/fragment/10/position = Vector2( 915, 203 )
+nodes/fragment/11/node = SubResource( 5 )
+nodes/fragment/11/position = Vector2( 1192, 243.5 )
+nodes/fragment/12/node = SubResource( 6 )
+nodes/fragment/12/position = Vector2( 980, 20 )
+nodes/fragment/13/node = SubResource( 7 )
+nodes/fragment/13/position = Vector2( 994, 113.5 )
+nodes/fragment/14/node = SubResource( 8 )
+nodes/fragment/14/position = Vector2( -587, 108 )
+nodes/fragment/16/node = SubResource( 9 )
+nodes/fragment/16/position = Vector2( -142, 207 )
+nodes/fragment/17/node = SubResource( 10 )
+nodes/fragment/17/position = Vector2( -406, 117.5 )
+nodes/fragment/18/node = SubResource( 11 )
+nodes/fragment/18/position = Vector2( -80, 120 )
+nodes/fragment/connections = PoolIntArray( 3, 0, 4, 1, 2, 0, 4, 0, 5, 0, 6, 0, 6, 0, 9, 0, 9, 0, 8, 0, 8, 0, 10, 0, 10, 0, 11, 2, 12, 0, 11, 0, 13, 0, 11, 1, 17, 0, 16, 0, 4, 0, 16, 1, 18, 0, 5, 1, 11, 0, 0, 0 )
+
+[sub_resource type="ShaderMaterial" id=20]
+shader = SubResource( 19 )
+
+[sub_resource type="CylinderMesh" id=21]
+material = SubResource( 20 )
+bottom_radius = 0.5
+height = 5.0
+radial_segments = 32
+
+[node name="Follower" type="KinematicBody"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="thrust" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+stream = ExtResource( 2 )
+unit_db = 15.814
+unit_size = 3.8
+autoplay = true
+doppler_tracking = 2
+
+[node name="rocket" type="Spatial" parent="."]
+
+[node name="spike" type="MeshInstance" parent="rocket"]
+transform = Transform( 1.2, 0, 0, 0, -5.24537e-08, 1.2, 0, -1.2, -5.24537e-08, 0, 0, -2.8 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="light" type="MeshInstance" parent="rocket"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5 )
+mesh = SubResource( 3 )
+material/0 = ExtResource( 5 )
+
+[node name="body" type="MeshInstance" parent="rocket"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 21 )
+material/0 = null
+
+[node name="armTimer" type="Timer" parent="."]
+autostart = true
+[connection signal="timeout" from="armTimer" to="." method="_on_armTimer_timeout"]
