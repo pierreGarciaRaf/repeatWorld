@@ -166,6 +166,8 @@ radial_segments = 32
 [node name="Follower" type="KinematicBody"]
 script = ExtResource( 1 )
 explosionPath = "res://src/worldPieces/FX/explosion.tscn"
+thrust = 5.0
+directFollow = 2.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

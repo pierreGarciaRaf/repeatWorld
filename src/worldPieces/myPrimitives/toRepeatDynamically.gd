@@ -20,6 +20,8 @@ func linkToIntHeight(i):
 	else:
 		base = get_node("base"+str(i))
 	for child in $base0.get_children():
+		if child.name == "ball":
+			print("did for ball")
 		if childToDuplicatesWithDistanceInt.has([child,i]):
 			pass
 		else:

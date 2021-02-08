@@ -91,6 +91,7 @@ func _physics_process(_delta):
 		var explosionScene = explosion.instance()
 		explosionScene.name += self.name
 		explosionScene.transform = self.transform
+		explosionScene.velocity = self.velocity
 		get_parent().add_child(explosionScene)
 		emit_signal("destruction",self.get_path())
 
