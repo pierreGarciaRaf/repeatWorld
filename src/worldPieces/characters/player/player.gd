@@ -1,4 +1,4 @@
-extends "KinematicEuclidianBody.gd"
+extends KinematicEuclidianBody
 
 
 var velocity = Vector3.ZERO
@@ -67,7 +67,7 @@ func _physics_process(delta):
 	var acc = -accSpeed * sin(pitch) - forwardMomentum*forwardMomentum * dampingStrength * delta
 	forwardMomentum = max(0, forwardMomentum + acc)
 	var verticalAcc = 30 * exp(-forwardMomentum*forwardMomentum)
-	verticalVelocity = verticalVelocity + verticalAcc*delta
+	verticalVelocity = verticalVelocity + verticalAcc * delta
 	verticalVelocity = verticalVelocity / exp(0.001 * forwardMomentum)
 	$CanvasLayer/Label.text = "vertVel : " + String(verticalVelocity) + "\nforwMom" + String(forwardMomentum) + "\nvertAcc" + String(verticalAcc)
 	$AudioStreamPlayer3D.unit_db = 80*pow(velocity.length()/500,1.5)-40

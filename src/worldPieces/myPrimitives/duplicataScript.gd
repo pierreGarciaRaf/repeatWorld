@@ -1,7 +1,5 @@
 extends Spatial
-
 var toTrackOnPath:NodePath
-
 var intDistance:int
 
 var yDistance

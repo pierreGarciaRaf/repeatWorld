@@ -1,4 +1,5 @@
-extends "KinematicEuclidianBody.gd"
+extends KinematicEuclidianBody
+
 export var radius = 100.0
 
 var velocity = Vector3.ZERO

@@ -1,8 +1,9 @@
-extends "KinematicEuclidianBody.gd"
+extends KinematicEuclidianBody
 
 
 export (NodePath) var toFollowPath = null 
-onready var explosion =load("res://explosion.tscn")
+export (String) var explosionPath
+onready var explosion = load(explosionPath)
 
 export var thrust = 5.0
 export var directFollow = 2.0
@@ -103,4 +104,4 @@ func _on_armTimer_timeout():
 	$armTimer.queue_free()
 	$armTimer.stop()
 	armed = true
-	emit_signal("masterPropertyChanged",$rocket/light.get_path(),"material_override",load("res://FollowerArmedLight.tres"))
+	emit_signal("masterPropertyChanged",$rocket/light.get_path(),"material_override",load("res://src/worldPieces/characters/ennemy/chaser/chaserArmed.tres"))

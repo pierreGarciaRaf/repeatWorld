@@ -1,8 +1,8 @@
 [gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://Follower.gd" type="Script" id=1]
+[ext_resource path="res://src/worldPieces/characters/ennemy/chaser/Chaser.gd" type="Script" id=1]
 [ext_resource path="res://thrust.ogg" type="AudioStream" id=2]
-[ext_resource path="res://FollowerUnarmedLight.tres" type="Material" id=5]
+[ext_resource path="res://src/worldPieces/characters/ennemy/chaser/chaserUnarmedLight.tres" type="Material" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
 height = 5.0
@@ -66,6 +66,8 @@ operator = 2
 
 [sub_resource type="VisualShader" id=19]
 code = "shader_type spatial;
+render_mode specular_schlick_ggx;
+
 
 
 
@@ -163,6 +165,7 @@ radial_segments = 32
 
 [node name="Follower" type="KinematicBody"]
 script = ExtResource( 1 )
+explosionPath = "res://src/worldPieces/FX/explosion.tscn"
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
@@ -170,7 +173,7 @@ shape = SubResource( 1 )
 [node name="thrust" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
 stream = ExtResource( 2 )
-unit_db = 15.814
+unit_db = 10.0
 unit_size = 3.8
 autoplay = true
 doppler_tracking = 2

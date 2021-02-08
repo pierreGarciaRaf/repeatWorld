@@ -1,4 +1,4 @@
-extends "SpatialEuclidian.gd"
+extends SpatialEuclidian
 
 
 

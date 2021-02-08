@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody",
+"class": "KinematicEuclidianBody",
+"language": "GDScript",
+"path": "res://src/worldPieces/myPrimitives/KinematicEuclidianBody.gd"
+}, {
+"base": "Spatial",
+"class": "SpatialEuclidian",
+"language": "GDScript",
+"path": "res://src/worldPieces/myPrimitives/SpatialEuclidian.gd"
+} ]
 _global_script_class_icons={
-
+"KinematicEuclidianBody": "",
+"SpatialEuclidian": ""
 }
 
 [application]
@@ -21,7 +32,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-WorldGlobalVariables="*res://worldGlobalVariables.gd"
+WorldGlobalVariables="*res://src/levels/worldGlobalVariables.gd"
 
 [editor_plugins]
 
@@ -33,4 +44,5 @@ common/physics_fps=120
 
 [rendering]
 
+quality/directional_shadow/size=8192
 environment/default_environment="res://default_env.tres"

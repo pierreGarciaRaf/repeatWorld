@@ -29,7 +29,7 @@ func linkToIntHeight(i):
 				child.connect("destruction",self,"destruction")
 			var duplicated = (child as Node).duplicate()
 			base.add_child(duplicated)
-			(duplicated as Node).set_script(load("res://duplicataScript.gd"))
+			(duplicated as Node).set_script(load("res://src/worldPieces/myPrimitives/duplicataScript.gd"))
 			duplicated.toTrackOnPath = (child as Node).get_path()
 			duplicated.intDistance = i
 			duplicated.call("_ready")

@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://player.gd" type="Script" id=1]
-[ext_resource path="res://default_env.tres" type="Environment" id=2]
-[ext_resource path="res://wind.ogg" type="AudioStream" id=3]
+[ext_resource path="res://default_env.tres" type="Environment" id=1]
+[ext_resource path="res://src/worldPieces/characters/player/player.gd" type="Script" id=2]
+[ext_resource path="res://src/worldPieces/characters/player/wind.ogg" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.657237
@@ -16,7 +16,7 @@ mid_height = 1.4
 albedo_color = Color( 0.807843, 0.211765, 0.211765, 1 )
 
 [node name="Spatial" type="KinematicBody"]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
@@ -28,7 +28,7 @@ material/0 = SubResource( 3 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.976736, 0.214446, 0, -0.214446, 0.976736, -4.76837e-07, 9.95281, 17.3977 )
 cull_mask = 524287
-environment = ExtResource( 2 )
+environment = ExtResource( 1 )
 current = true
 far = 500.0
 
